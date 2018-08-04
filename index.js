@@ -2,6 +2,9 @@ const express = require('express');
 const server = express();
 const dotenv = require('dotenv');
 const mongoose = require ('mongoose');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 //setup environment variables
 dotenv.config();
@@ -14,6 +17,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
 const port = process.env.PORT || 8008;
 
 // power ups (middleware)
+server.use(helmet());
+server.use(morgan("combined"));
+server.use(bodyParser.json());  //accepts json data
+server.use(bodyParser.urlencoded( { extended: true } ));  //accept html form data
 
 //models
 const Food = mongoose.model('Food', { type: String, color: String, weight: Number });
