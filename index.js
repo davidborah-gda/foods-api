@@ -71,8 +71,21 @@ server.post('/foods', async (req, res) => {
     }
 });
 //update one special food by id
-server.put('/foods/:id', (req, res) => {
-    res.send(`updating ${req.params.id} food`);
+server.put('/foods/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, owner } = req.body;
+    try {
+        const updatedFood = await Food.findByIdAndUpdate(id, { name, owner }, { new: true });
+        res.status(200).json({
+            msg: "Update Successful",
+            food: updatedFood
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: "Updated No Happen"
+        });
+        
+    }
 });
 //delete one special food by id
 server.delete('/foods/:id', async (req, res) => {
