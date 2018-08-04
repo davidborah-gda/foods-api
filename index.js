@@ -56,9 +56,9 @@ server.get('/foods/:id', async (req, res) => {
 });
 // create new food
 server.post('/foods', async (req, res) => {
-    const { name, owner } = req.body;
+    const { type, color, weight } = req.body;
     try {
-        const Food = new Food({ type, color, weight });
+        const food = new Food({ type, color, weight });
         await food.save();
         res.status(201).json({
             msg: "Saved Food",
