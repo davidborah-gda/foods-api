@@ -41,8 +41,18 @@ server.get('/foods', async (req, res) => {
     }
 });
 // get one special food by id
-server.get('/foods/:id', (req, res) => {
-    res.send(`get ${req.params.id} food`);
+server.get('/foods/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const foods = await Food.find({ _id: id });
+        res.status(200).json({
+            foods: foods
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Stuff still broke!!!'
+        });
+    }
 });
 // create new food
 server.post('/foods', (req, res) => {
@@ -53,8 +63,18 @@ server.put('/foods/:id', (req, res) => {
     res.send(`updating ${req.params.id} food`);
 });
 //delete one special food by id
-server.delete('/foods/:id', (req, res) => {
-    res.send(`deleting ${req.params.id} food`);
+server.delete('/foods/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await Food.findByIdAndRemove(id);
+        res.status(200).json({
+            msg: "yayyy destruction"
+        });
+    }   catch (err) {
+        res.status(500).json({
+            msg: "broked"
+        });
+    }
 });
 
 // kick it off
