@@ -55,8 +55,20 @@ server.get('/foods/:id', async (req, res) => {
     }
 });
 // create new food
-server.post('/foods', (req, res) => {
-    res.send(`creating a new food`);
+server.post('/foods', async (req, res) => {
+    const { name, owner } = req.body;
+    try {
+        const Food = new Food({ name, owner });
+        await food.save();
+        res.status(201).json({
+            msg: "Saved Food",
+            food
+        }); 
+    } catch (error) {
+        res.status(500).json({
+            msg: "Food not Created"
+        })
+    }
 });
 //update one special food by id
 server.put('/foods/:id', (req, res) => {
