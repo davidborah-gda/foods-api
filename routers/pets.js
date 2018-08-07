@@ -50,9 +50,9 @@ server.post('/foods', async (req, res) => {
 //update one special food by id
 server.put('/foods/:id', async (req, res) => {
     const { id } = req.params;
-    const { type, color, weight } = req.body;
+    const { type, color, weight, createdAt } = req.body;
     try {
-        const updatedFood = await Food.findByIdAndUpdate(id, { type, color, weight }, { new: true });
+        const updatedFood = await Food.findByIdAndUpdate(id, { type, color, weight, createdAt }, { new: true });
         res.status(200).json({
             msg: "Update Successful",
             food: updatedFood
