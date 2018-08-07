@@ -23,7 +23,7 @@ server.use(bodyParser.json());  //accepts json data
 server.use(bodyParser.urlencoded( { extended: true } ));  //accept html form data
 
 //models
-const Food = mongoose.model('Food', { type: String, color: String, weight: Number });
+const Food = require('./models/food');
 
 // routes (get, create, update, delete)
 
