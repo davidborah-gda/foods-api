@@ -30,6 +30,13 @@ const Food = require('./models/food');
 //routers
 server.use(foodRouter);
 
+//404 handler
+server.use((req, res,) => {
+    res.status(404).json({
+        msg: "Resource not found"
+    });
+});
+
 // kick it off
 server.listen(port, () => {
     console.log(`Now listening on port: ${port}`);
